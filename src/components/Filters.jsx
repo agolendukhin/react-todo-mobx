@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import { StoreContext } from '../store/store'
+import { observer } from 'mobx-react'
 
 const Filters = () => {
   const { filtersStore } = useContext(StoreContext)
@@ -30,4 +31,4 @@ const Filters = () => {
   )
 }
 
-export default Filters
+export default observer(Filters)

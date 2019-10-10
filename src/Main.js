@@ -7,6 +7,7 @@ import Header from './components/Header'
 import VisibleTodoList from './components/VisibleTodoList'
 import Footer from './components/Footer'
 import { StoreContext } from './store/store'
+import { observer } from 'mobx-react'
 
 const Main = () => {
   const { todosStore } = useContext(StoreContext)
@@ -42,10 +43,10 @@ const Main = () => {
       <Footer
         activeTodosCount={activeTodosCount}
         completedTodosCount={completedTodosCount}
-        display={!!todos.length}
+        display={!!todosCount}
       />
     </section>
   )
 }
 
-export default Main
+export default observer(Main)

@@ -29,12 +29,14 @@ export const filtersStore = observable({
     active: false,
     completed: false,
   },
-  toggle: activatedFilter => ({
-    all: false,
-    active: false,
-    completed: false,
-    [activatedFilter]: true,
-  }),
+  toggle(activatedFilter) {
+    this.filters = {
+      all: false,
+      active: false,
+      completed: false,
+      [activatedFilter]: true,
+    }
+  },
 })
 
 export const StoreContext = createContext({})
