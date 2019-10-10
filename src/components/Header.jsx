@@ -1,24 +1,19 @@
-import React, { useState } from 'react'
-
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
+import React, { useState, useContext } from 'react'
 import { getNewId } from '../utils'
-
-import { addTodo } from '../store/actions'
-
 import { get } from 'lodash'
+import { observer } from 'mobx-react'
+import { StoreContext } from '../store/store'
 
-const Header = props => {
-  const { todos, addTodo } = props
+const Header = () => {
+  const { todosStore } = useContext(StoreContext)
   const [value, setValue] = useState('')
 
   const handleChange = e => setValue(get(e, ['target', 'value'], ''))
 
   const handleKeyPress = e => {
     if (e.key === 'Enter' && value) {
-      addTodo({
-        id: getNewId(todos),
+      todosStore.add({
+        id: getNewId(todosStore.todos),
         text: value,
         completed: false,
       })
@@ -41,13 +36,4 @@ const Header = props => {
   )
 }
 
-export default connect(
-  ({ todos }) => ({ todos }),
-  dispatch =>
-    bindActionCreators(
-      {
-        addTodo,
-      },
-      dispatch
-    )
-)(Header)
+export default observer(Header)

@@ -1,29 +1,18 @@
-import React from 'react'
-
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
-import { clearCompleted } from '../store/actions'
+import React, { useContext } from 'react'
+import { StoreContext } from '../store/store'
 
 const ClearCompletedButton = props => {
-  const { display, clearCompleted } = props
+  const { todosStore } = useContext(StoreContext)
 
-  if (!display) return null
+  if (!props.display) {
+    return null
+  }
 
   return (
-    <button className="clear-completed" onClick={clearCompleted}>
+    <button className="clear-completed" onClick={todosStore.clearCompleted}>
       Clear completed
     </button>
   )
 }
 
-export default connect(
-  ({ todos, filters }) => ({ todos, filters }),
-  dispatch =>
-    bindActionCreators(
-      {
-        clearCompleted,
-      },
-      dispatch
-    )
-)(ClearCompletedButton)
+export default ClearCompletedButton

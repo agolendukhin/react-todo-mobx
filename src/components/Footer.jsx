@@ -1,18 +1,9 @@
 import React from 'react'
-
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
 import Filters from './Filters'
 import ClearCompletedButton from './ClearCompleted'
 
-import { toggleFilter, clearCompleted } from '../store/actions'
-
 const Footer = props => {
-  const { todos, activeTodosCount, completedTodosCount } = props
-
-  const display = !!todos.length
-
+  const { display, activeTodosCount, completedTodosCount } = props
   if (!display) return null
 
   return (
@@ -27,14 +18,4 @@ const Footer = props => {
   )
 }
 
-export default connect(
-  ({ todos, filters }) => ({ todos, filters }),
-  dispatch =>
-    bindActionCreators(
-      {
-        toggleFilter,
-        clearCompleted,
-      },
-      dispatch
-    )
-)(Footer)
+export default Footer

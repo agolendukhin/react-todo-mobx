@@ -1,15 +1,11 @@
-import React, { useState } from 'react'
-
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
+import React, { useState, useContext } from 'react'
+import { StoreContext } from '../store/store'
 import { get } from 'lodash'
 
-import { updateTodo } from '../store/actions'
-
 const EditInput = props => {
-  const { todo, updateTodo, resetLiClassName } = props
+  const { todo, resetLiClassName } = props
 
+  const { todosStore } = useContext(StoreContext)
   const [value, setValue] = useState(get(props, 'todo.text', ''))
 
   const onChange = e => setValue(get(e, 'target.value', ''))
@@ -17,7 +13,7 @@ const EditInput = props => {
   const onKeyPress = e => e.key === 'Enter' && resetLiClassName()
 
   const onBlur = () => {
-    updateTodo({
+    todosStore.update({
       ...todo,
       text: value,
     })
@@ -37,13 +33,4 @@ const EditInput = props => {
   )
 }
 
-export default connect(
-  ({ todos }) => ({ todos }),
-  dispatch =>
-    bindActionCreators(
-      {
-        updateTodo,
-      },
-      dispatch
-    )
-)(EditInput)
+export default EditInput

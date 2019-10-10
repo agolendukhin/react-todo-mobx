@@ -1,21 +1,40 @@
-import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
-import logger from 'redux-logger'
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import { observable, action } from 'mobx'
+import { createContext } from 'react'
 
-import reducers from './reducers'
+export const todosStore = observable({
+  todos: [],
+  add(todo) {
+    this.todos.push(todo)
+  },
+  remove(todoId) {
+    this.todos = this.todos.filter(todo => todo.id !== todoId)
+  },
+  update(todo) {
+    this.todos = this.todos.map(t => (t.id !== todo.id ? t : todo))
+  },
+  toggleAll() {
+    this.todos = this.todos.map(todo => ({
+      ...todo,
+      completed: action.completed,
+    }))
+  },
+  clearCompleted() {
+    this.todos = this.todos.filter(t => !t.completed)
+  },
+})
 
-const persistConfig = {
-  key: 'root',
-  storage,
-}
+export const filtersStore = observable({
+  filters: {
+    all: true,
+    active: false,
+    completed: false,
+  },
+  toggle: activatedFilter => ({
+    all: false,
+    active: false,
+    completed: false,
+    [activatedFilter]: true,
+  }),
+})
 
-const persistedReducer = persistReducer(persistConfig, reducers)
-
-export const store = createStore(
-  persistedReducer,
-  applyMiddleware(thunk, logger)
-)
-
-export const persistor = persistStore(store)
+export const StoreContext = createContext({})

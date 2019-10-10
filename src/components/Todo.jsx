@@ -1,22 +1,15 @@
-import React, { useState, useEffect } from 'react'
-
+import React, { useState, useEffect, useContext } from 'react'
 import { get } from 'lodash'
-
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
 import classNames from 'classnames'
-
+import { StoreContext } from '../store/store'
 import ToggleTodo from './ToggleTodo'
 import EditInput from './EditInput'
 
-import { removeTodo } from '../store/actions'
-
 const Todo = props => {
   const initialCompleted = get(props, 'todo.completed')
+  const { todo } = props
 
-  const { todo, removeTodo } = props
-
+  const { todosStore } = useContext(StoreContext)
   const [completed, setCompleted] = useState(initialCompleted)
   const [className, setClassName] = useState(
     getLiClassName({ completed: initialCompleted })
@@ -39,7 +32,10 @@ const Todo = props => {
       <div className="view">
         <ToggleTodo todo={todo} />
         <label onDoubleClick={handleDoubleClick}>{todo.text}</label>
-        <button className="destroy" onClick={() => removeTodo(todo.id)} />
+        <button
+          className="destroy"
+          onClick={() => todosStore.remove(todo.id)}
+        />
       </div>
       <EditInput todo={todo} resetLiClassName={resetLiClassName} />
     </li>
@@ -52,13 +48,4 @@ const getLiClassName = ({ completed, editing = false }) =>
     editing,
   })
 
-export default connect(
-  ({ todos }) => ({ todos }),
-  dispatch =>
-    bindActionCreators(
-      {
-        removeTodo,
-      },
-      dispatch
-    )
-)(Todo)
+export default Todo

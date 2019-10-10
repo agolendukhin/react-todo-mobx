@@ -1,7 +1,4 @@
-import React from 'react'
-
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import React, { useContext } from 'react'
 
 import '../node_modules/todomvc-common/base.css'
 import '../node_modules/todomvc-app-css/index.css'
@@ -9,15 +6,17 @@ import '../node_modules/todomvc-app-css/index.css'
 import Header from './components/Header'
 import VisibleTodoList from './components/VisibleTodoList'
 import Footer from './components/Footer'
+import { StoreContext } from './store/store'
 
-import { toggleAllTodos } from './store/actions'
+const Main = () => {
+  const { todosStore } = useContext(StoreContext)
+  const { todos } = todosStore
 
-const Main = props => {
-  const { todos, activeTodosCount, toggleAllTodos } = props
+  const activeTodosCount = todos.filter(todo => !todo.completed).length
 
   const handleToggleAllTodos = () => {
     const completed = activeTodosCount ? true : false
-    toggleAllTodos(completed)
+    todosStore.toggleAll(completed)
   }
 
   const todosCount = todos.length
@@ -43,22 +42,10 @@ const Main = props => {
       <Footer
         activeTodosCount={activeTodosCount}
         completedTodosCount={completedTodosCount}
+        display={!!todos.length}
       />
     </section>
   )
 }
 
-export default connect(
-  ({ todos, filters }) => {
-    const activeTodosCount = todos.filter(t => !t.completed).length
-
-    return { activeTodosCount, todos, filters }
-  },
-  dispatch =>
-    bindActionCreators(
-      {
-        toggleAllTodos,
-      },
-      dispatch
-    )
-)(Main)
+export default Main

@@ -1,13 +1,15 @@
-import React from 'react'
-
-import { connect } from 'react-redux'
-
+import React, { useContext } from 'react'
+import { observer } from 'mobx-react'
 import { findKey } from 'lodash'
-
 import Todo from './Todo'
+import { StoreContext } from '../store/store'
 
-const VisibleTodoList = props => {
-  const { todos, filters } = props
+const VisibleTodoList = () => {
+  const {
+    todosStore: { todos },
+    filtersStore: { filters },
+  } = useContext(StoreContext)
+
   const filter = findKey(filters, f => f)
 
   return (
@@ -29,7 +31,4 @@ const VisibleTodoList = props => {
   )
 }
 
-export default connect(
-  ({ todos, filters }) => ({ todos, filters }),
-  null
-)(VisibleTodoList)
+export default observer(VisibleTodoList)
