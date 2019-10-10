@@ -1,11 +1,9 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { getNewId } from '../utils'
 import { get } from 'lodash'
-import { observer } from 'mobx-react'
-import { StoreContext } from '../store/store'
+import { todosStore } from '../store'
 
 const Header = () => {
-  const { todosStore } = useContext(StoreContext)
   const [value, setValue] = useState('')
 
   const handleChange = e => setValue(get(e, ['target', 'value'], ''))
@@ -36,4 +34,4 @@ const Header = () => {
   )
 }
 
-export default observer(Header)
+export default Header

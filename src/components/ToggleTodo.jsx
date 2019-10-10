@@ -1,8 +1,7 @@
-import React, { useContext } from 'react'
-import { StoreContext } from '../store/store'
+import React from 'react'
+import { todosStore } from '../store'
 
 const ToggleTodo = props => {
-  const { todosStore } = useContext(StoreContext)
   const { todo } = props
 
   return (

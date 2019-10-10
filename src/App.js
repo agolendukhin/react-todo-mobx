@@ -1,15 +1,47 @@
-import React, { Component } from 'react'
-import { todosStore, filtersStore, StoreContext } from './store/store'
-import Main from './Main'
+import React from 'react'
+import { observer } from 'mobx-react'
+import Header from './components/Header'
+import VisibleTodoList from './components/VisibleTodoList'
+import Footer from './components/Footer'
+import { todosStore } from './store'
 
-class App extends Component {
-  render() {
-    return (
-      <StoreContext.Provider value={{ todosStore, filtersStore }}>
-        <Main />
-      </StoreContext.Provider>
-    )
+const App = () => {
+  const { todos } = todosStore
+
+  const activeTodosCount = todos.filter(todo => !todo.completed).length
+
+  const handleToggleAllTodos = () => {
+    const completed = activeTodosCount ? true : false
+    todosStore.toggleAll(completed)
   }
+
+  const todosCount = todos.length
+  const completedTodosCount = todosCount - activeTodosCount
+
+  return (
+    <section className="todoapp">
+      <Header />
+      <section className="main">
+        {todos.length ? (
+          <React.Fragment>
+            <input
+              className="toggle-all"
+              type="checkbox"
+              checked={!activeTodosCount}
+              onChange={() => {}}
+            />
+            <label onClick={handleToggleAllTodos} htmlFor="toggle-all" />
+          </React.Fragment>
+        ) : null}
+        <VisibleTodoList />
+      </section>
+      <Footer
+        activeTodosCount={activeTodosCount}
+        completedTodosCount={completedTodosCount}
+        display={!!todosCount}
+      />
+    </section>
+  )
 }
 
-export default App
+export default observer(App)

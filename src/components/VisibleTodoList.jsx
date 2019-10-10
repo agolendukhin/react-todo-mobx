@@ -1,14 +1,12 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react'
 import { findKey } from 'lodash'
 import Todo from './Todo'
-import { StoreContext } from '../store/store'
+import { todosStore, filtersStore } from '../store'
 
 const VisibleTodoList = () => {
-  const {
-    todosStore: { todos },
-    filtersStore: { filters },
-  } = useContext(StoreContext)
+  const { todos } = todosStore
+  const { filters } = filtersStore
 
   const filter = findKey(filters, f => f)
 

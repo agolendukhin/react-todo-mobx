@@ -1,10 +1,8 @@
-import React, { useEffect, useContext } from 'react'
-import { StoreContext } from '../store/store'
+import React, { useEffect } from 'react'
 import { observer } from 'mobx-react'
+import { filtersStore } from '../store'
 
 const Filters = () => {
-  const { filtersStore } = useContext(StoreContext)
-
   useEffect(() => {
     const filter = window.location.hash.slice(2)
 

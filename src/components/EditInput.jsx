@@ -1,11 +1,10 @@
-import React, { useState, useContext } from 'react'
-import { StoreContext } from '../store/store'
+import React, { useState } from 'react'
 import { get } from 'lodash'
+import { todosStore } from '../store'
 
 const EditInput = props => {
   const { todo, resetLiClassName } = props
 
-  const { todosStore } = useContext(StoreContext)
   const [value, setValue] = useState(get(props, 'todo.text', ''))
 
   const onChange = e => setValue(get(e, 'target.value', ''))

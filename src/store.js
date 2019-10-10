@@ -1,5 +1,4 @@
-import { observable, action } from 'mobx'
-import { createContext } from 'react'
+import { observable } from 'mobx'
 
 export const todosStore = observable({
   todos: [],
@@ -12,10 +11,10 @@ export const todosStore = observable({
   update(todo) {
     this.todos = this.todos.map(t => (t.id !== todo.id ? t : todo))
   },
-  toggleAll() {
+  toggleAll(completed) {
     this.todos = this.todos.map(todo => ({
       ...todo,
-      completed: action.completed,
+      completed,
     }))
   },
   clearCompleted() {
@@ -38,5 +37,3 @@ export const filtersStore = observable({
     }
   },
 })
-
-export const StoreContext = createContext({})

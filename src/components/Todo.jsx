@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { get } from 'lodash'
 import classNames from 'classnames'
-import { StoreContext } from '../store/store'
 import ToggleTodo from './ToggleTodo'
 import EditInput from './EditInput'
+import { todosStore } from '../store'
 
 const Todo = props => {
   const initialCompleted = get(props, 'todo.completed')
   const { todo } = props
 
-  const { todosStore } = useContext(StoreContext)
   const [completed, setCompleted] = useState(initialCompleted)
   const [className, setClassName] = useState(
     getLiClassName({ completed: initialCompleted })
