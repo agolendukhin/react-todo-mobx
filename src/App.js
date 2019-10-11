@@ -6,9 +6,7 @@ import Footer from './components/Footer'
 import { todosStore } from './store'
 
 const App = () => {
-  const { todos } = todosStore
-
-  const activeTodosCount = todos.filter(todo => !todo.completed).length
+  const { todos, activeTodosCount } = todosStore
 
   const handleToggleAllTodos = () => {
     const completed = activeTodosCount ? true : false
