@@ -6,3 +6,5 @@ export const getNewId = array => {
 }
 
 export const IS_DEV = process.env.NODE_ENV === 'development'
+
+export const appVersion = '0.0.1'

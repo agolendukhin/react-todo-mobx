@@ -31,10 +31,7 @@ const Todo = props => {
       <div className="view">
         <ToggleTodo todo={todo} />
         <label onDoubleClick={handleDoubleClick}>{todo.text}</label>
-        <button
-          className="destroy"
-          onClick={() => todosStore.remove(todo.id)}
-        />
+        <button className="destroy" onClick={() => todosStore.remove(todo)} />
       </div>
       <EditInput todo={todo} resetLiClassName={resetLiClassName} />
     </li>
